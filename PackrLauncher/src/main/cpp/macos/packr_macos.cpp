@@ -124,7 +124,7 @@ int searchForLibJli(const char *filename, const struct stat *statptr, int filefl
     return 0;
 }
 
-bool loadJNIFunctions(const string& jrePath, GetDefaultJavaVMInitArgs* getDefaultJavaVMInitArgs, CreateJavaVM* createJavaVM) {
+bool loadJNIFunctions(const std::string& jrePath, GetDefaultJavaVMInitArgs* getDefaultJavaVMInitArgs, CreateJavaVM* createJavaVM) {
     libJliSearchPath[0] = 0;
     nftw(jrePath.c_str(), searchForLibJli, 5, FTW_CHDIR | FTW_DEPTH | FTW_MOUNT);
 

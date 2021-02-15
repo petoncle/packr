@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-bool loadJNIFunctions(const string& jrePath, GetDefaultJavaVMInitArgs* getDefaultJavaVMInitArgs, CreateJavaVM* createJavaVM) {
+bool loadJNIFunctions(const std::string& jrePath, GetDefaultJavaVMInitArgs* getDefaultJavaVMInitArgs, CreateJavaVM* createJavaVM) {
 
     void* handle;
     struct stat buffer;

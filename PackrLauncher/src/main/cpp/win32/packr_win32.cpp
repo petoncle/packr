@@ -288,7 +288,7 @@ LPCWSTR s2ws(const std::string& s) {
    return sw;
 }
 
-bool loadJNIFunctions(const string& jrePath, GetDefaultJavaVMInitArgs *getDefaultJavaVMInitArgs, CreateJavaVM *createJavaVM) {
+bool loadJNIFunctions(const std::string& jrePath, GetDefaultJavaVMInitArgs *getDefaultJavaVMInitArgs, CreateJavaVM *createJavaVM) {
    addDllDirectory(s2ws(jrePath + "\\bin"));
    addDllDirectory(s2ws(jrePath + "\\bin\\server"));
 
