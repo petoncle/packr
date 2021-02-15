@@ -50,7 +50,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: ./gradlew --refresh-dependencies --no-build-cache -i --stacktrace clean build
+        run: ./gradlew --refresh-dependencies --no-build-cache -i --stacktrace clean :Packr:publish
         env:
           PACKR_GITHUB_MAVEN_USERNAME: ${{ github.actor }}
           PACKR_GITHUB_MAVEN_TOKEN: ${{ secrets.GITHUB_TOKEN }}
