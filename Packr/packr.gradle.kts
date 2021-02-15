@@ -94,14 +94,14 @@ dependencies {
    add(packrLauncherMavenRepositoryExecutables.name, "com.badlogicgames.packr:packrlauncher-linux-x86-64:$version") {
       // Gradle won't download extension free files without this
       artifact {
-         this.name = "packrLauncher-linux-x86-64"
+         this.name = "packrlauncher-linux-x86-64"
          this.type = ""
       }
    }
    add(packrLauncherMavenRepositoryExecutables.name, "com.badlogicgames.packr:packrlauncher-macos:$version") {
       // Gradle won't download extension free files without this
       artifact {
-         this.name = "packrLauncher-macos"
+         this.name = "packrlauncher-macos"
          this.type = ""
       }
    }
