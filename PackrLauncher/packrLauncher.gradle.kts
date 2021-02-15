@@ -300,7 +300,7 @@ publishing {
 
       // Inorder to build the packr.jar, executables must be available from all supported platforms.
       val ngToken: String? =
-              findProperty("NG_ARTIFACT_REPOSITORY_TOKEN") as String? ?: System.getenv("NG_ARTIFACT_REPOSITORY_TOKEN")
+            findProperty("NG_ARTIFACT_REPOSITORY_TOKEN") as String? ?: System.getenv("NG_ARTIFACT_REPOSITORY_TOKEN")
       if (ngToken != null) {
          val ngUsername = findProperty("NG_ARTIFACT_REPOSITORY_USER") as String? ?: System.getenv("NG_ARTIFACT_REPOSITORY_USER")
          if (isSnapshot) {

@@ -188,13 +188,13 @@ val syncCurrentOsPackrLaunchers: TaskProvider<Sync> = tasks.register<Sync>("sync
 val packrLauncherDirectory: Path = buildDir.toPath().resolve("packrLauncher")
 
 /**
- * Creates a consolidated directory containing the latest downloaded from the Maven repository
+ * Creates a consolidated directory containing the latest locally built executables and filling in any missing ones with those downloaded from the Maven repository
  */
 val createPackrLauncherConsolidatedDirectory: TaskProvider<Task> = tasks.register("createPackrLauncherConsolidatedDirectory") {
-   // dependsOn(syncCurrentOsPackrLaunchers)
+   dependsOn(syncCurrentOsPackrLaunchers)
    dependsOn(syncPackrLaunchers)
 
-   // inputs.dir(syncCurrentOsPackrLaunchers.get().destinationDir)
+   inputs.dir(syncCurrentOsPackrLaunchers.get().destinationDir)
    inputs.dir(syncPackrLaunchers.get().destinationDir)
    outputs.dir(packrLauncherDirectory.toFile())
 
@@ -210,12 +210,12 @@ val createPackrLauncherConsolidatedDirectory: TaskProvider<Task> = tasks.registe
       }
 
       // Executables built by PackrLauncher project on the current system
-//      Files.walk(syncCurrentOsPackrLaunchers.get().destinationDir.toPath()).use { pathStream ->
-//         pathStream.forEach {
-//            if (Files.isSameFile(syncCurrentOsPackrLaunchers.get().destinationDir.toPath(), it)) return@forEach
-//            Files.copy(it, packrLauncherDirectory.resolve(it.fileName), StandardCopyOption.REPLACE_EXISTING)
-//         }
-//      }
+      Files.walk(syncCurrentOsPackrLaunchers.get().destinationDir.toPath()).use { pathStream ->
+         pathStream.forEach {
+            if (Files.isSameFile(syncCurrentOsPackrLaunchers.get().destinationDir.toPath(), it)) return@forEach
+            Files.copy(it, packrLauncherDirectory.resolve(it.fileName), StandardCopyOption.REPLACE_EXISTING)
+         }
+      }
    }
 }
 
