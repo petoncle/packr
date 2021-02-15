@@ -311,7 +311,7 @@ public class Packr {
 	 private void writeConfig (PackrOutput output) throws IOException {
 		  StringBuilder builder = new StringBuilder();
 		  builder.append("{\n");
-		  builder.append("  \"jrePath\": \"").append(config.jrePath).append("\",");
+		  builder.append("  \"jrePath\": \"").append(config.jrePath).append("\",\n");
 		  builder.append("  \"classPath\": [");
 
 		  String delimiter = "\n";
