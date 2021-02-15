@@ -288,12 +288,24 @@ LPCWSTR s2ws(const std::string& s) {
    return sw;
 }
 
+PTCHAR stringToPtchar(const std::string& s) {
+    const PTCHAR pstring = nullptr;
+    #ifdef UNICODE
+        std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+        std::wstring wstr = converter.from_bytes(s);
+        pstring = wstr.data();
+    #else
+        pstring = s.data();
+    #endif
+    return pstring;
+}
+
 bool loadJNIFunctions(const std::string& jrePath, GetDefaultJavaVMInitArgs *getDefaultJavaVMInitArgs, CreateJavaVM *createJavaVM) {
    addDllDirectory(s2ws(jrePath + "\\bin"));
    addDllDirectory(s2ws(jrePath + "\\bin\\server"));
 
    // Load every shared library in jre/bin because awt.dll doesn't load its dependent libraries using the correct search paths
-   loadLibraries(s2ws(jrePath + "\\bin\\*.dll"));
+   loadLibraries(stringToPtchar(jrePath + "\\bin\\*.dll"));
 
    TCHAR jvmDllFullPath[FULL_PATH_SIZE] = TEXT("");
    if (GetFullPathName(s2ws(jrePath + "\\bin\\server\\jvm.dll"), FULL_PATH_SIZE, jvmDllFullPath, nullptr) == 0) {
