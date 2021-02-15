@@ -115,7 +115,7 @@ application {
 
       // Create a single special publication from lipo on MacOS since that allows combining multiple architectures into a single binary
       val publicationName =
-            "packrLauncher-${targetMachine.operatingSystemFamily.name}${if (!targetMachine.operatingSystemFamily.isMacOs) "-${targetMachine.architecture.name}" else ""}"
+            "packrlauncher-${targetMachine.operatingSystemFamily.name}${if (!targetMachine.operatingSystemFamily.isMacOs) "-${targetMachine.architecture.name}" else ""}"
       if (binaryCompileTask.isOptimized && publishing.publications.findByName(publicationName) == null) {
          logger.info("executableFile = ${executableFile.get()}")
 
