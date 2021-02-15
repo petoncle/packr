@@ -6,7 +6,7 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ master, build-tests ]
+    branches: [ master, build-tests, add-jrepath-option-to-config-json ]
   pull_request:
     branches: [ master ]
 

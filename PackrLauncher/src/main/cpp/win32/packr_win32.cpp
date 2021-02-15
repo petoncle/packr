@@ -282,15 +282,21 @@ void loadLibraries(const PTCHAR libraryPattern) {
    FindClose(hFind);
 }
 
-bool loadJNIFunctions(GetDefaultJavaVMInitArgs *getDefaultJavaVMInitArgs, CreateJavaVM *createJavaVM) {
-   addDllDirectory(TEXT("jre\\bin"));
-   addDllDirectory(TEXT("jre\\bin\\server"));
+LPCWSTR s2ws(const std::string& s) {
+   std::wstring stemp = std::wstring(s.begin(), s.end());
+   LPCWSTR sw = stemp.c_str();
+   return sw;
+}
+
+bool loadJNIFunctions(const string& jrePath, GetDefaultJavaVMInitArgs *getDefaultJavaVMInitArgs, CreateJavaVM *createJavaVM) {
+   addDllDirectory(s2ws(jrePath + "\\bin"));
+   addDllDirectory(s2ws(jrePath + "\\bin\\server"));
 
    // Load every shared library in jre/bin because awt.dll doesn't load its dependent libraries using the correct search paths
-   loadLibraries(TEXT("jre\\bin\\*.dll"));
+   loadLibraries(s2ws(jrePath + "\\bin\\*.dll"));
 
    TCHAR jvmDllFullPath[FULL_PATH_SIZE] = TEXT("");
-   if (GetFullPathName(TEXT("jre\\bin\\server\\jvm.dll"), FULL_PATH_SIZE, jvmDllFullPath, nullptr) == 0) {
+   if (GetFullPathName(s2ws(jrePath + "\\bin\\server\\jvm.dll"), FULL_PATH_SIZE, jvmDllFullPath, nullptr) == 0) {
       printLastError(TEXT("get the jvm.dll absolute path"));
       return false;
    }
