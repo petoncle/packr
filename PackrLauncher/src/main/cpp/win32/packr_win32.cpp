@@ -288,7 +288,7 @@ LPCWSTR s2ws(const std::string& s) {
    return sw;
 }
 
-TCHAR* stringToPtchar(const std::string& s) {
+const TCHAR* stringToPtchar(const std::string& s) {
     const TCHAR* pstring = nullptr;
     #ifdef UNICODE
         std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
