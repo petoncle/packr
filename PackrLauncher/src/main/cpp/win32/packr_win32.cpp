@@ -303,7 +303,7 @@ const TCHAR* stringToTcharPointer(const std::string& s) {
 
 bool loadJNIFunctions(const std::string& jrePath, GetDefaultJavaVMInitArgs *getDefaultJavaVMInitArgs, CreateJavaVM *createJavaVM) {
    std::string backslashedJrePath = jrePath;
-   std::replace(jrePath.begin(), jrePath.end(), '/', '\\');
+   std::replace(backslashedJrePath.begin(), backslashedJrePath.end(), '/', '\\');
    addDllDirectory(stringToLpcwstr(backslashedJrePath + "\\bin"));
    addDllDirectory(stringToLpcwstr(backslashedJrePath + "\\bin\\server"));
 
