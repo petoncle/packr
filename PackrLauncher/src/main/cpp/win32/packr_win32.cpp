@@ -289,7 +289,7 @@ LPCWSTR s2ws(const std::string& s) {
 }
 
 PTCHAR stringToPtchar(const std::string& s) {
-    const PTCHAR pstring = nullptr;
+    PTCHAR pstring = nullptr;
     #ifdef UNICODE
         std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
         std::wstring wstr = converter.from_bytes(s);
