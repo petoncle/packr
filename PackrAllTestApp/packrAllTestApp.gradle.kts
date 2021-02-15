@@ -287,9 +287,6 @@ fun createPackrContent(jdkPath: Path, osFamily: String, destination: Path) {
       args(jdkPath.toFile())
       args("--executable")
       args("PackrAllTestApp")
-      args("--jrePath")
-      // Tests a custom jre path.
-      args("jre-123456")
       args("--classpath")
       Files.walk(jarTask.get().destinationDirectory.asFile.get().toPath()).use { pathStream ->
          pathStream.forEach { path ->
