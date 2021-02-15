@@ -58,6 +58,8 @@ jobs:
           PACKR_GITHUB_MAVEN_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-all-job:
+    # :Packr:syncPackrLaunchers needs other OS's packr launchers.
+    needs: publish-packrlauncher-job
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
