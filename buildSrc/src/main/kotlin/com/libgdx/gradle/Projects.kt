@@ -22,4 +22,4 @@ import org.gradle.api.Project
  * Is the [Project.getVersion] a snapshot? E.g., does it contain `SNAPSHOT`
  */
 val Project.isSnapshot: Boolean
-   get() = version.toString().contains("SNAPSHOT")
+   get() = version.toString().contains("SNAPSHOT") || true
