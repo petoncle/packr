@@ -33,3 +33,6 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: ./gradlew --refresh-dependencies --no-build-cache -i --stacktrace clean :PackrLauncher:publish
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
