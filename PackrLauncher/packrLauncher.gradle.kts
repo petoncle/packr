@@ -16,8 +16,8 @@
 
 @file:Suppress("UnstableApiUsage")
 
+import com.libgdx.gradle.gitHubRepositoryForPackr
 import com.libgdx.gradle.isSnapshot
-import com.libgdx.gradle.packrPublishRepositories
 import org.gradle.internal.jvm.Jvm
 import java.nio.file.Path
 
@@ -288,14 +288,7 @@ artifacts {
 
 publishing {
    repositories {
-      maven {
-         name = "GitHubPackages"
-         url = uri("https://maven.pkg.github.com/petoncle/packr")
-         credentials {
-            username = System.getenv("GITHUB_ACTOR")
-            password = System.getenv("GITHUB_TOKEN")
-         }
-      }
+      gitHubRepositoryForPackr(project)
    }
    publications {
       configureEach {

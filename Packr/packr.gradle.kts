@@ -91,21 +91,21 @@ dependencies {
    runtimeOnly("org.apache.logging.log4j:log4j-core:$log4jVersion")
 
    // Packr launcher executables
-   add(packrLauncherMavenRepositoryExecutables.name, "com.badlogicgames.packr:packrLauncher-linux-x86-64:$version") {
+   add(packrLauncherMavenRepositoryExecutables.name, "com.badlogicgames.packr:packrlauncher-linux-x86-64:$version") {
       // Gradle won't download extension free files without this
       artifact {
          this.name = "packrLauncher-linux-x86-64"
          this.type = ""
       }
    }
-   add(packrLauncherMavenRepositoryExecutables.name, "com.badlogicgames.packr:packrLauncher-macos:$version") {
+   add(packrLauncherMavenRepositoryExecutables.name, "com.badlogicgames.packr:packrlauncher-macos:$version") {
       // Gradle won't download extension free files without this
       artifact {
          this.name = "packrLauncher-macos"
          this.type = ""
       }
    }
-   add(packrLauncherMavenRepositoryExecutables.name, "com.badlogicgames.packr:packrLauncher-windows-x86-64:$version")
+   add(packrLauncherMavenRepositoryExecutables.name, "com.badlogicgames.packr:packrlauncher-windows-x86-64:$version")
    add(packrLauncherExecutablesForCurrentOs.name, project(":PackrLauncher", "currentOsExecutables"))
 }
 
@@ -188,10 +188,10 @@ val syncCurrentOsPackrLaunchers: TaskProvider<Sync> = tasks.register<Sync>("sync
 val packrLauncherDirectory: Path = buildDir.toPath().resolve("packrLauncher")
 
 /**
- * Creates a consolidated directory containing the latest locally built executables and filling in any missing ones with those downloaded from the Maven repository
+ * Creates a consolidated directory containing the latest downloaded from the Maven repository
  */
 val createPackrLauncherConsolidatedDirectory: TaskProvider<Task> = tasks.register("createPackrLauncherConsolidatedDirectory") {
-   dependsOn(syncCurrentOsPackrLaunchers)
+   // dependsOn(syncCurrentOsPackrLaunchers)
    dependsOn(syncPackrLaunchers)
 
    inputs.dir(syncCurrentOsPackrLaunchers.get().destinationDir)

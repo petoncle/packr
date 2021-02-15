@@ -23,7 +23,7 @@ import java.net.URI
 /**
  * URI for the GitHub Packr Maven repository.
  */
-val gitHubPackrMavenUri: URI = URI("https://maven.pkg.github.com/libgdx/packr")
+val gitHubPackrMavenUri: URI = URI("https://maven.pkg.github.com/petoncle/packr")
 
 /**
  * Username for signing into GitHub Maven packages url [gitHubPackrMavenUri]. The username is loaded from the Gradle property or
