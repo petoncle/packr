@@ -12,8 +12,6 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  strategy:
-    max-parallel: 1
   packrlauncher-job:
     strategy:
       matrix:
