@@ -27,6 +27,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <codecvt>
+#include <algorithm> // For string character replacement std::replace.
 
 #include <packr.h>
 

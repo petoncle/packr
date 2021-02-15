@@ -18,6 +18,7 @@
 
 import com.libgdx.gradle.gitHubRepositoryForPackr
 import com.libgdx.gradle.isSnapshot
+import com.libgdx.gradle.packrPublishRepositories
 import org.gradle.internal.jvm.Jvm
 import java.nio.file.Path
 
@@ -289,6 +290,35 @@ artifacts {
 publishing {
    repositories {
       gitHubRepositoryForPackr(project)
+      packrPublishRepositories(project)
+      /*
+       * Publishing to GitHub for the executables is causing issues:
+       * Could not GET 'https://maven.pkg.github.com/libgdx/packr/com/badlogicgames/packr/packrLauncher-linux-x86-64/3.0.0-SNAPSHOT/maven-metadata.xml'.
+       * Received status code 400 from server: Bad Request
+       */
+      //      gitHubRepositoryForPackr(project)
+
+      // Inorder to build the packr.jar, executables must be available from all supported platforms.
+      val ngToken: String? =
+              findProperty("NG_ARTIFACT_REPOSITORY_TOKEN") as String? ?: System.getenv("NG_ARTIFACT_REPOSITORY_TOKEN")
+      if (ngToken != null) {
+         val ngUsername = findProperty("NG_ARTIFACT_REPOSITORY_USER") as String? ?: System.getenv("NG_ARTIFACT_REPOSITORY_USER")
+         if (isSnapshot) {
+            maven("https://artifactory.nimblygames.com/artifactory/ng-public-snapshot/") {
+               credentials {
+                  username = ngUsername
+                  password = ngToken
+               }
+            }
+         } else {
+            maven("https://artifactory.nimblygames.com/artifactory/ng-public-release/") {
+               credentials {
+                  username = ngUsername
+                  password = ngToken
+               }
+            }
+         }
+      }
    }
    publications {
       configureEach {
