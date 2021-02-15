@@ -255,7 +255,7 @@ void addDllDirectory(LPCWSTR directory) {
  * Loads every library found using the pattern {@code libraryPattern}.
  * @param libraryPattern the search pattern to use to locate shared libaries to load
  */
-void loadLibraries(const PTCHAR libraryPattern) {
+void loadLibraries(const TCHAR* libraryPattern) {
    WIN32_FIND_DATA FindFileData;
    HANDLE hFind = nullptr;
    TCHAR libraryPath[MAX_PATH];
@@ -288,8 +288,8 @@ LPCWSTR s2ws(const std::string& s) {
    return sw;
 }
 
-TCHAR* stringToPtchar(const std::string& s) {
-    TCHAR* pstring = nullptr;
+const TCHAR* stringToPtchar(const std::string& s) {
+    const TCHAR* pstring = nullptr;
     #ifdef UNICODE
         std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
         std::wstring wstr = converter.from_bytes(s);
