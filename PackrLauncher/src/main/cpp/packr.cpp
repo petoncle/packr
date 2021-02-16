@@ -510,9 +510,9 @@ void launchJavaVM(const LaunchJavaVMCallback &callback) {
         if (L'/' == trimmedJrePath.back())
             trimmedJrePath.pop_back();
 #ifdef UNICODE
-        jrePath = trimmedJrePath.c_str();
-#else
         jrePath = converter.to_bytes(trimmedJrePath).c_str();
+#else
+        jrePath = trimmedJrePath.c_str();
 #endif
     }
     else {
