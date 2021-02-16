@@ -497,6 +497,8 @@ void launchJavaVM(const LaunchJavaVMCallback &callback) {
 
     GetDefaultJavaVMInitArgs getDefaultJavaVMInitArgs = nullptr;
     CreateJavaVM createJavaVM = nullptr;
+    wstring trimmedJrePathWstring;
+    string trimmedJrePathString;
     const dropt_char* jrePath = nullptr;
     if (hasJsonValue(jsonRoot, "jrePath", sajson::TYPE_STRING)) {
         const string originalJrePathString = getJsonValue(jsonRoot, "jrePath").as_string();
@@ -504,15 +506,15 @@ void launchJavaVM(const LaunchJavaVMCallback &callback) {
         wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
         wstring originalJrePathWstring = converter.from_bytes(originalJrePathString.c_str());
         wcout << L"originalJrePathWstring: " << originalJrePathWstring << endl;
-        wstring trimmedJrePath = originalJrePathWstring;
+        trimmedJrePathWstring = originalJrePathWstring;
         // Removes trailing slash.
-        if (L'/' == trimmedJrePath.back())
-            trimmedJrePath.pop_back();
-        wcout << L"trimmedJrePath: " << trimmedJrePath << endl;
+        if (L'/' == trimmedJrePathWstring.back())
+            trimmedJrePathWstring.pop_back();
+        wcout << L"trimmedJrePathWstring: " << trimmedJrePathWstring << endl;
 #ifdef UNICODE
-        jrePath = trimmedJrePath.c_str();
+        jrePath = trimmedJrePathWstring.c_str();
 #else
-        string trimmedJrePathString = converter.to_bytes(trimmedJrePath);
+        trimmedJrePathString = converter.to_bytes(trimmedJrePathWstring);
         cout << "trimmedJrePathString: " << trimmedJrePathString << endl;
         jrePath = trimmedJrePathString.c_str();
         cout << "Done creating jrePath: " << jrePath << endl;
