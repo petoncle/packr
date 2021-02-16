@@ -512,7 +512,9 @@ void launchJavaVM(const LaunchJavaVMCallback &callback) {
 #ifdef UNICODE
         jrePath = trimmedJrePath.c_str();
 #else
-        jrePath = converter.to_bytes(trimmedJrePath).c_str();
+        string trimmedJrePathString = converter.to_bytes(trimmedJrePath);
+        cout << "trimmedJrePathString: " << trimmedJrePathString << endl;
+        jrePath = trimmedJrePathString.c_str();
         cout << "Done creating jrePath: " << jrePath << endl;
 #endif
     }
