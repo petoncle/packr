@@ -500,12 +500,15 @@ void launchJavaVM(const LaunchJavaVMCallback &callback) {
     const dropt_char* jrePath = nullptr;
     if (hasJsonValue(jsonRoot, "jrePath", sajson::TYPE_STRING)) {
         const string originalJrePathString = getJsonValue(jsonRoot, "jrePath").as_string();
+        cout << "sajson originalJrePathString: " << originalJrePathString << endl;
         wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
         wstring originalJrePathWstring = converter.from_bytes(originalJrePathString.c_str());
+        wcout << L"originalJrePathWstring: " << originalJrePathWstring << endl;
         wstring trimmedJrePath = originalJrePathWstring;
         // Removes trailing slash.
         if (L'/' == trimmedJrePath.back())
             trimmedJrePath.pop_back();
+        wcout << L"trimmedJrePath: " << trimmedJrePath << endl;
 #ifdef UNICODE
         jrePath = trimmedJrePath.c_str();
 #else
