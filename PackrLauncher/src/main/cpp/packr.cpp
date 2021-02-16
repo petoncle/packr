@@ -26,6 +26,7 @@
 #include <memory>
 #include <cstring>
 
+#include <locale>
 #include <codecvt>
 #ifdef UNICODE
 #define stringCompare wcscmp
