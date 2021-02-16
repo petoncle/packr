@@ -496,14 +496,28 @@ void launchJavaVM(const LaunchJavaVMCallback &callback) {
 
     GetDefaultJavaVMInitArgs getDefaultJavaVMInitArgs = nullptr;
     CreateJavaVM createJavaVM = nullptr;
-
-    const string originalJrePath = hasJsonValue(jsonRoot, "jrePath", sajson::TYPE_STRING) ?
-        getJsonValue(jsonRoot, "jrePath").as_string() : "jre";
-    string trimmedJrePath = originalJrePath;
-    // Removes trailing slash.
-    if ('/' == trimmedJrePath.back())
-        trimmedJrePath.pop_back();
-    const string jrePath = trimmedJrePath;
+    const dropt_char* jrePath = nullptr;
+    if (hasJsonValue(jsonRoot, "jrePath", sajson::TYPE_STRING)) {
+        const string originalJrePathString = getJsonValue(jsonRoot, "jrePath").as_string();
+#ifdef UNICODE
+        wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+        wstring originalJrePathWstring = converter.from_bytes(originalJrePathString.c_str());
+#else
+        wstring originalJrePathWstring = wstring(originalJrePathString.begin(), originalJrePathString.end());
+#endif
+        wstring trimmedJrePath = originalJrePathWstring;
+        // Removes trailing slash.
+        if (L'/' == trimmedJrePath.back())
+            trimmedJrePath.pop_back();
+#ifdef UNICODE
+        jrePath = trimmedJrePath.c_str();
+#else
+        jrePath = converter.to_bytes(trimmedJrePath).c_str();
+#endif
+    }
+    else {
+        jrePath = DROPT_TEXT_LITERAL("jre");
+    }
 
     if (!loadJNIFunctions(jrePath, &getDefaultJavaVMInitArgs, &createJavaVM)) {
         cerr << "Error: failed to load VM runtime library!" << endl;
