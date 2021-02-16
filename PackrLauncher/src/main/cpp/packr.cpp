@@ -26,6 +26,7 @@
 #include <memory>
 #include <cstring>
 
+#include <locale>
 #include <codecvt>
 #ifdef UNICODE
 #define stringCompare wcscmp
@@ -512,7 +513,7 @@ void launchJavaVM(const LaunchJavaVMCallback &callback) {
 #ifdef UNICODE
         jrePath = trimmedJrePath.c_str();
 #else
-        wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+        wstring_convert<std::codecvt_utf8<wchar_t>> converter;
         jrePath = converter.to_bytes(trimmedJrePath).c_str();
 #endif
     }
