@@ -510,9 +510,10 @@ void launchJavaVM(const LaunchJavaVMCallback &callback) {
         if (L'/' == trimmedJrePath.back())
             trimmedJrePath.pop_back();
 #ifdef UNICODE
-        jrePath = converter.to_bytes(trimmedJrePath).c_str();
-#else
         jrePath = trimmedJrePath.c_str();
+#else
+        wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+        jrePath = converter.to_bytes(trimmedJrePath).c_str();
 #endif
     }
     else {
