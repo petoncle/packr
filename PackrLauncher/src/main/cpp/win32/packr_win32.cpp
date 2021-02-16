@@ -284,7 +284,7 @@ void loadLibraries(const PTCHAR libraryPattern) {
 
 bool loadJNIFunctions(const dropt_char* jrePath, GetDefaultJavaVMInitArgs *getDefaultJavaVMInitArgs, CreateJavaVM *createJavaVM) {
    wstring backslashedJrePath = wstring(jrePath);
-   std::replace(backslashedJrePath.begin(), backslashedJrePath.end(), L'/', L'\\');
+   backslashedJrePath.replace(backslashedJrePath.begin(), backslashedJrePath.end(), L'/', L'\\');
    addDllDirectory((backslashedJrePath + L"\\bin").c_str());
    addDllDirectory((backslashedJrePath + L"\\bin\\server").c_str());
 
