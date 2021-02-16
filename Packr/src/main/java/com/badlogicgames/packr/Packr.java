@@ -24,13 +24,7 @@ import org.apache.commons.compress.compressors.CompressorException;
 import org.apache.commons.compress.utils.FileNameUtils;
 import org.apache.commons.compress.utils.IOUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Writer;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
@@ -340,7 +334,7 @@ public class Packr {
 		  builder.append("  ]\n");
 		  builder.append("}");
 
-		  try (Writer writer = new FileWriter(new File(output.resourcesFolder, "config.json"))) {
+		  try (Writer writer = new OutputStreamWriter(new FileOutputStream(new File(output.resourcesFolder, "config.json")), StandardCharsets.UTF_8)) {
 				writer.write(builder.toString());
 		  }
 	 }
