@@ -256,7 +256,7 @@ void addDllDirectory(LPCWSTR directory) {
  * Loads every library found using the pattern {@code libraryPattern}.
  * @param libraryPattern the search pattern to use to locate shared libaries to load
  */
-void loadLibraries(const PTCHAR libraryPattern) {
+void loadLibraries(const TCHAR* libraryPattern) {
    WIN32_FIND_DATA FindFileData;
    HANDLE hFind = nullptr;
    TCHAR libraryPath[MAX_PATH];
@@ -291,7 +291,7 @@ bool loadJNIFunctions(const dropt_char* jrePath, GetDefaultJavaVMInitArgs *getDe
 
    // Load every shared library in jre/bin because awt.dll doesn't load its dependent libraries using the correct search paths
    wstring allDllsWstring = backslashedJrePath + L"\\bin\\*.dll";
-   const dropt_char* allDlls = allDllsWstring.c_str();
+   dropt_char* allDlls = allDllsWstring.c_str();
    loadLibraries(allDlls);
 
    TCHAR jvmDllFullPath[FULL_PATH_SIZE] = TEXT("");
