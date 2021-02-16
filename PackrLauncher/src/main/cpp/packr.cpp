@@ -26,8 +26,8 @@
 #include <memory>
 #include <cstring>
 
-#ifdef UNICODE
 #include <codecvt>
+#ifdef UNICODE
 #define stringCompare wcscmp
 #define findLastCharacter wcsrchr
 #else
