@@ -27,7 +27,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include <codecvt>
-#include <algorithm> // For string character replacement std::replace.
 
 #include <packr.h>
 
@@ -256,7 +255,7 @@ void addDllDirectory(LPCWSTR directory) {
  * Loads every library found using the pattern {@code libraryPattern}.
  * @param libraryPattern the search pattern to use to locate shared libaries to load
  */
-void loadLibraries(const TCHAR* libraryPattern) {
+void loadLibraries(const PTCHAR libraryPattern) {
    WIN32_FIND_DATA FindFileData;
    HANDLE hFind = nullptr;
    TCHAR libraryPath[MAX_PATH];
@@ -284,12 +283,7 @@ void loadLibraries(const TCHAR* libraryPattern) {
 }
 
 bool loadJNIFunctions(const dropt_char* jrePath, GetDefaultJavaVMInitArgs *getDefaultJavaVMInitArgs, CreateJavaVM *createJavaVM) {
-#ifdef UNICODE
-   wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-   wstring backslashedJrePath = converter.from_bytes(jrePath);
-#else
    wstring backslashedJrePath = wstring(jrePath);
-#endif
    std::replace(backslashedJrePath.begin(), backslashedJrePath.end(), L'/', L'\\');
    addDllDirectory((backslashedJrePath + L"\\bin").c_str());
    addDllDirectory((backslashedJrePath + L"\\bin\\server").c_str());
