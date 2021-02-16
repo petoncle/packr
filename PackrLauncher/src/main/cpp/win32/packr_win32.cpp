@@ -293,7 +293,7 @@ bool loadJNIFunctions(const dropt_char* jrePath, GetDefaultJavaVMInitArgs *getDe
    loadLibraries((backslashedJrePath + L"\\bin\\*.dll").c_str());
 
    TCHAR jvmDllFullPath[FULL_PATH_SIZE] = TEXT("");
-   if (GetFullPathName(stringToLpcwstr(backslashedJrePath + L"\\bin\\server\\jvm.dll"), FULL_PATH_SIZE, jvmDllFullPath, nullptr) == 0) {
+   if (GetFullPathName((backslashedJrePath + L"\\bin\\server\\jvm.dll").c_str(), FULL_PATH_SIZE, jvmDllFullPath, nullptr) == 0) {
       printLastError(TEXT("get the jvm.dll absolute path"));
       return false;
    }
