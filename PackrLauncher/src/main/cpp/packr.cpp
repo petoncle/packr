@@ -504,7 +504,7 @@ void launchJavaVM(const LaunchJavaVMCallback &callback) {
         const string originalJrePathString = getJsonValue(jsonRoot, "jrePath").as_string();
         cout << "sajson originalJrePathString: " << originalJrePathString << endl;
         wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-        wstring originalJrePathWstring = converter.from_bytes(originalJrePathString.c_str());
+        wstring originalJrePathWstring = converter.from_bytes(originalJrePathString);
         wcout << L"originalJrePathWstring: " << originalJrePathWstring << endl;
         trimmedJrePathWstring = originalJrePathWstring;
         // Removes trailing slash.
