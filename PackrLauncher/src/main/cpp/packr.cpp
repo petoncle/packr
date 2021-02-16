@@ -515,7 +515,7 @@ void launchJavaVM(const LaunchJavaVMCallback &callback) {
     else {
         jrePath = DROPT_TEXT_LITERAL("jre");
     }
-
+    cout << "Done creating jrePath" << endl;
     if (!loadJNIFunctions(jrePath, &getDefaultJavaVMInitArgs, &createJavaVM)) {
         cerr << "Error: failed to load VM runtime library!" << endl;
         exit(EXIT_FAILURE);

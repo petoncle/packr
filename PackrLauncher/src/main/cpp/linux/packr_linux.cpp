@@ -46,6 +46,7 @@ bool loadJNIFunctions(const dropt_char* jrePath, GetDefaultJavaVMInitArgs* getDe
     void* handle;
     struct stat buffer;
     std::string jrePathString(jrePath);
+    cout << "loadJNIFunctions jrePathString: " << jrePathString << endl;
 
     if (handle == NULL && stat((jrePathString + "/lib/server/libjvm.so").c_str(), &buffer) == 0) {
         handle = dlopen((jrePathString + "/lib/server/libjvm.so").c_str(), RTLD_LAZY);
