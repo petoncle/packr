@@ -290,7 +290,8 @@ bool loadJNIFunctions(const dropt_char* jrePath, GetDefaultJavaVMInitArgs *getDe
    addDllDirectory((backslashedJrePath + L"\\bin\\server").c_str());
 
    // Load every shared library in jre/bin because awt.dll doesn't load its dependent libraries using the correct search paths
-   dropt_char* const allDlls = (backslashedJrePath + L"\\bin\\*.dll").c_str();
+   wstring allDllsWstring = backslashedJrePath + L"\\bin\\*.dll";
+   dropt_char* const allDlls = allDllsWstring.c_str();
    loadLibraries(allDlls);
 
    TCHAR jvmDllFullPath[FULL_PATH_SIZE] = TEXT("");
