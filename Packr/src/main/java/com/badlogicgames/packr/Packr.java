@@ -23,6 +23,7 @@ import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.compressors.CompressorException;
 import org.apache.commons.compress.utils.FileNameUtils;
 import org.apache.commons.compress.utils.IOUtils;
+import org.eclipse.pde.internal.swt.tools.IconExe;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -283,9 +284,19 @@ public class Packr {
 		  }
 
 		  System.out.println("Copying executable ...");
-		  Files.write(output.executableFolder.toPath().resolve(config.executable + extension), exe);
+		  Path exePath = output.executableFolder.toPath().resolve(config.executable + extension);
+		  Files.write(exePath, exe);
 
 		  PackrFileUtils.chmodX(new File(output.executableFolder, config.executable + extension));
+		  if (config.platform == PackrConfig.Platform.Windows64) {
+			  try {
+				  IconExe.main(new String[] { exePath.toString(),
+						  config.iconResource.toPath().toString() });
+			  }
+			  catch (Exception e) {
+				  throw new RuntimeException("Unable to set the Windows executable icon", e);
+			  }
+		  }
 
 		  System.out.println("Copying classpath(s) ...");
 		  for (String file : config.classpath) {

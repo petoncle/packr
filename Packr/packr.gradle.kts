@@ -80,6 +80,8 @@ dependencies {
    implementation("org.apache.commons:commons-compress:1.20")
    implementation("com.lexicalscope.jewelcli:jewelcli:0.8.9")
    implementation("com.eclipsesource.minimal-json:minimal-json:0.9.1")
+   implementation("com.eclipsesource.minimal-json:minimal-json:0.9.1")
+   implementation("org.eclipse.platform:org.eclipse.equinox.p2.publisher.eclipse:1.3.700")
 
    // test
    testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
