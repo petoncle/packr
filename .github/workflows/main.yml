@@ -6,14 +6,13 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [ master, windows-icon ]
   pull_request:
     branches: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  build-packrlauncher-job:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
@@ -32,4 +31,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: ./gradlew --refresh-dependencies --no-build-cache -i --stacktrace clean build
+        run: ./gradlew --refresh-dependencies --no-build-cache -i --stacktrace clean :PackrLauncher:build
+        env:
+          PACKR_GITHUB_MAVEN_USERNAME: ${{ github.actor }}
+          PACKR_GITHUB_MAVEN_TOKEN: ${{ secrets.GITHUB_TOKEN }}
