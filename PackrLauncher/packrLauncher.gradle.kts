@@ -16,6 +16,7 @@
 
 @file:Suppress("UnstableApiUsage")
 
+import com.libgdx.gradle.gitHubRepositoryForPackr
 import com.libgdx.gradle.isSnapshot
 import com.libgdx.gradle.packrPublishRepositories
 import org.gradle.internal.jvm.Jvm
@@ -115,7 +116,7 @@ application {
 
       // Create a single special publication from lipo on MacOS since that allows combining multiple architectures into a single binary
       val publicationName =
-            "packrLauncher-${targetMachine.operatingSystemFamily.name}${if (!targetMachine.operatingSystemFamily.isMacOs) "-${targetMachine.architecture.name}" else ""}"
+            "packrlauncher-${targetMachine.operatingSystemFamily.name}${if (!targetMachine.operatingSystemFamily.isMacOs) "-${targetMachine.architecture.name}" else ""}"
       if (binaryCompileTask.isOptimized && publishing.publications.findByName(publicationName) == null) {
          logger.info("executableFile = ${executableFile.get()}")
 
@@ -288,6 +289,7 @@ artifacts {
 
 publishing {
    repositories {
+      gitHubRepositoryForPackr(project)
       packrPublishRepositories(project)
       /*
        * Publishing to GitHub for the executables is causing issues:
