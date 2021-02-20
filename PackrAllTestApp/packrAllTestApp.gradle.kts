@@ -286,7 +286,7 @@ fun createPackrContent(jdkPath: Path, osFamily: String, destination: Path) {
       args("--jdk")
       args(jdkPath.toFile())
       args("--executable")
-      args("PackrAllTestApp")
+      args("PackrAllTestAppÄ")
       args("--jrePath")
       // Tests a custom jre path.
       args("jre/123456Ä/")

@@ -340,10 +340,11 @@ public class Packr {
 		  }
 		  builder.append("  ]\n");
 		  builder.append("}");
-		 String configName = config.executable.replaceAll("\\.exe$", "");
-		 try (Writer writer = new OutputStreamWriter(new FileOutputStream(new File(output.resourcesFolder, configName)), StandardCharsets.UTF_8)) {
-				writer.write(builder.toString());
-		  }
+		 try (Writer writer = new OutputStreamWriter(new FileOutputStream(
+				 new File(output.resourcesFolder, config.executable + ".json")),
+				 StandardCharsets.UTF_8)) {
+			 writer.write(builder.toString());
+		 }
 	 }
 
 	 /**
