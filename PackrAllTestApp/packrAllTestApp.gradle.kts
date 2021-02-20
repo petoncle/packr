@@ -190,9 +190,9 @@ val createTestDirectory: TaskProvider<Task> = tasks.register("createTestDirector
 
                // run packr exe
                executable = if (isFamily(FAMILY_MAC)) {
-                  workingDir.toPath().resolve("Contents").resolve("MacOS").resolve("PackrAllTestApp").toAbsolutePath().toString()
+                  workingDir.toPath().resolve("Contents").resolve("MacOS").resolve("PackrAllTestAppÄ").toAbsolutePath().toString()
                } else {
-                  workingDir.toPath().resolve("PackrAllTestApp").toAbsolutePath().toString()
+                  workingDir.toPath().resolve("PackrAllTestAppÄ").toAbsolutePath().toString()
                }
                args("-c")
                args("--verbose")
