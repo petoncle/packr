@@ -346,7 +346,7 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
     dropt_bool _verbose = 0;
     dropt_bool _console = 0;
     dropt_bool _cli = 0;
-    dropt_char* appNameDroptChar;
+    const dropt_char* appNameDroptChar;
 #ifdef UNICODE
     wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     appNameDroptChar = converter.from_bytes(appName).c_str();
