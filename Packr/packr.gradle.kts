@@ -91,21 +91,21 @@ dependencies {
    runtimeOnly("org.apache.logging.log4j:log4j-core:$log4jVersion")
 
    // Packr launcher executables
-   add(packrLauncherMavenRepositoryExecutables.name, "com.badlogicgames.packr:packrLauncher-linux-x86-64:$version") {
+   add(packrLauncherMavenRepositoryExecutables.name, "com.badlogicgames.packr:packrlauncher-linux-x86-64:$version") {
       // Gradle won't download extension free files without this
       artifact {
-         this.name = "packrLauncher-linux-x86-64"
+         this.name = "packrlauncher-linux-x86-64"
          this.type = ""
       }
    }
-   add(packrLauncherMavenRepositoryExecutables.name, "com.badlogicgames.packr:packrLauncher-macos:$version") {
+   add(packrLauncherMavenRepositoryExecutables.name, "com.badlogicgames.packr:packrlauncher-macos:$version") {
       // Gradle won't download extension free files without this
       artifact {
-         this.name = "packrLauncher-macos"
+         this.name = "packrlauncher-macos"
          this.type = ""
       }
    }
-   add(packrLauncherMavenRepositoryExecutables.name, "com.badlogicgames.packr:packrLauncher-windows-x86-64:$version")
+   add(packrLauncherMavenRepositoryExecutables.name, "com.badlogicgames.packr:packrlauncher-windows-x86-64:$version")
    add(packrLauncherExecutablesForCurrentOs.name, project(":PackrLauncher", "currentOsExecutables"))
 }
 
