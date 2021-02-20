@@ -45,7 +45,7 @@ bool verbose = false;
  */
 static string workingDir;
 static string executableName;
-static string configurationPath = "config.json";
+static string configurationPath;
 
 static size_t cmdLineArgc = 0;
 
@@ -315,10 +315,29 @@ string getExecutableName(const dropt_char *executablePath) {
 #endif
 }
 
+/**
+ * Strips .exe from the executable name.
+ * @param executableName the UTF-8 encoded executable name
+ * @return UTF-8 encoded app name
+ */
+string getAppName(string& executableName) {
+    wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    wstring executableNameWstring = converter.from_bytes(executableName);
+    size_t lastDotIndex = executableNameWstring.find_last_of(L".exe");
+    wstring configurationPathWstring;
+    if (lastDotIndex == string::npos)
+        configurationPathWstring = executableNameWstring;
+    else
+        configurationPathWstring = executableNameWstring.substr(0, lastDotIndex);
+    string configurationPathString = converter.to_bytes(configurationPathWstring);
+    return configurationPathString;
+}
+
 bool setCmdLineArguments(int argc, dropt_char **argv) {
     const dropt_char *executablePath = getExecutablePath(argv[0]);
     workingDir = getExecutableDirectory(executablePath);
     executableName = getExecutableName(executablePath);
+    string appName = getAppName(executableName);
 
     dropt_bool showHelp = 0;
     dropt_bool showVersion = 0;
@@ -327,6 +346,15 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
     dropt_bool _verbose = 0;
     dropt_bool _console = 0;
     dropt_bool _cli = 0;
+    dropt_char* appNameDroptChar;
+    {
+#ifdef UNICODE
+        wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+        appNameDroptChar = converter.from_bytes(appName).c_str();
+#else
+        appNameDroptChar = appName.c_str();
+#endif
+    }
 
     dropt_option options[] = {{'c',
                                DROPT_TEXT_LITERAL("cli"),
@@ -360,7 +388,7 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
                               {'\0',
                                DROPT_TEXT_LITERAL("config"),
                                DROPT_TEXT_LITERAL("Specifies the configuration file."),
-                               DROPT_TEXT_LITERAL("config.json"),
+                               appNameDroptChar,
                                dropt_handle_string,
                                &config,
                                dropt_attr_optional_val},
@@ -422,9 +450,15 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
 
                 if (config != nullptr) {
                     if (verbose) {
-                        cout << "Using configuration file " << config << " ..." << endl;
+                        cout << "Using custom configuration file " << config << " ..." << endl;
                     }
                     configurationPath = string((char *) config);
+                }
+                else {
+                    if (verbose) {
+                        cout << "Using configuration file " << appName << " ..." << endl;
+                    }
+                    configurationPath = appName;
                 }
             }
         } else {
