@@ -328,7 +328,7 @@ string getDefaultConfigurationPath(string& executableName) {
     if (lastDotIndex == string::npos)
         configurationPathWstring = executableNameWstring;
     else
-        configurationPathWstring = executableNameWstring.substr(0, lastDotIndex);
+        configurationPathWstring = executableNameWstring.substr(0, lastDotIndex - 3);
     configurationPathWstring += L".json";
     string configurationPathString = converter.to_bytes(configurationPathWstring);
     return configurationPathString;
