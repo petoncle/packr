@@ -347,14 +347,12 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
     dropt_bool _console = 0;
     dropt_bool _cli = 0;
     dropt_char* appNameDroptChar;
-    {
 #ifdef UNICODE
-        wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-        appNameDroptChar = converter.from_bytes(appName).c_str();
+    wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    appNameDroptChar = converter.from_bytes(appName).c_str();
 #else
-        appNameDroptChar = appName.c_str();
+    appNameDroptChar = appName.c_str();
 #endif
-    }
 
     dropt_option options[] = {{'c',
                                DROPT_TEXT_LITERAL("cli"),
@@ -479,7 +477,6 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
 
         while (*remains != nullptr) {
 #ifdef UNICODE
-            wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
             string utf8CommandLineArgument = converter.to_bytes(*remains);
             cmdLineArgv[cmdLineArgc] = strdup(utf8CommandLineArgument.c_str());
 #else
