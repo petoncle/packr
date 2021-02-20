@@ -323,12 +323,15 @@ string getExecutableName(const dropt_char *executablePath) {
 string getDefaultConfigurationPath(string& executableName) {
     wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     wstring executableNameWstring = converter.from_bytes(executableName);
-    size_t lastDotIndex = executableNameWstring.find_last_of(L".exe");
+    wstring exeSuffix = wstring(L".exe");
+    bool hasExeSuffix = executableNameWstring.size() >= exeSuffix.size() &&
+        executableNameWstring.compare(executableNameWstring.size() - exeSuffix.size(),
+            exeSuffix.size(), exeSuffix) == 0;
     wstring configurationPathWstring;
-    if (lastDotIndex == string::npos)
+    if (!hasExeSuffix)
         configurationPathWstring = executableNameWstring;
     else
-        configurationPathWstring = executableNameWstring.substr(0, lastDotIndex - 3);
+        configurationPathWstring = executableNameWstring.substr(0, executableNameWstring.size() - exeSuffix.size());
     configurationPathWstring += L".json";
     string configurationPathString = converter.to_bytes(configurationPathWstring);
     return configurationPathString;
