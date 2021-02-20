@@ -455,7 +455,7 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
                 }
                 else {
                     if (verbose) {
-                        cout << "Using configuration file " << defaultConfigurationPath << " ..." << endl;
+                        cout << "Using default  configuration file " << defaultConfigurationPath << " ..." << endl;
                     }
                     configurationPath = defaultConfigurationPath;
                 }
@@ -463,6 +463,10 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
         } else {
             // treat all arguments as "remains"
             remains = &argv[1];
+            if (verbose) {
+                cout << "Using default configuration file " << defaultConfigurationPath << " ..." << endl;
+            }
+            configurationPath = defaultConfigurationPath;
         }
 
         // count number of unparsed arguments
