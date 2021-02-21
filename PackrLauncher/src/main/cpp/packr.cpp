@@ -315,33 +315,20 @@ string getExecutableName(const dropt_char *executablePath) {
 #endif
 }
 
-/**
- * Strips ".exe" from the executable name and appends ".json".
- * @param executableName the UTF-8 encoded executable name
- * @return UTF-8 encoded configuration path
- */
-string getDefaultConfigurationPath(string& executableName) {
-    wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-    wstring executableNameWstring = converter.from_bytes(executableName);
-    wstring exeSuffix = wstring(L".exe");
-    bool hasExeSuffix = executableNameWstring.size() >= exeSuffix.size() &&
-        executableNameWstring.compare(executableNameWstring.size() - exeSuffix.size(),
-            exeSuffix.size(), exeSuffix) == 0;
-    wstring configurationPathWstring;
-    if (!hasExeSuffix)
-        configurationPathWstring = executableNameWstring;
-    else
-        configurationPathWstring = executableNameWstring.substr(0, executableNameWstring.size() - exeSuffix.size());
-    configurationPathWstring += L".json";
-    string configurationPathString = converter.to_bytes(configurationPathWstring);
-    return configurationPathString;
-}
-
 bool setCmdLineArguments(int argc, dropt_char **argv) {
     const dropt_char *executablePath = getExecutablePath(argv[0]);
     workingDir = getExecutableDirectory(executablePath);
     executableName = getExecutableName(executablePath);
-    string defaultConfigurationPath = getDefaultConfigurationPath(executableName);
+    const dropt_char* defaultConfigurationPath;
+    string defaultConfigurationPathString;
+#ifdef UNICODE
+    wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    defaultConfigurationPath = getDefaultConfigurationPath(converter.from_bytes(executableName).c_str());
+    defaultConfigurationPathString = converter.to_bytes(defaultConfigurationPath).c_str();
+#else
+    defaultConfigurationPath = getDefaultConfigurationPath(executableName.c_str());
+    defaultConfigurationPathString = string(defaultConfigurationPath);
+#endif
 
     dropt_bool showHelp = 0;
     dropt_bool showVersion = 0;
@@ -350,13 +337,6 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
     dropt_bool _verbose = 0;
     dropt_bool _console = 0;
     dropt_bool _cli = 0;
-    const dropt_char* defaultConfigurationPathDroptChar;
-#ifdef UNICODE
-    wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-    defaultConfigurationPathDroptChar = converter.from_bytes(defaultConfigurationPath).c_str();
-#else
-    defaultConfigurationPathDroptChar = defaultConfigurationPath.c_str();
-#endif
 
     dropt_option options[] = {{'c',
                                DROPT_TEXT_LITERAL("cli"),
@@ -390,7 +370,7 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
                               {'\0',
                                DROPT_TEXT_LITERAL("config"),
                                DROPT_TEXT_LITERAL("Specifies the configuration file."),
-                               defaultConfigurationPathDroptChar,
+                               defaultConfigurationPath,
                                dropt_handle_string,
                                &config,
                                dropt_attr_optional_val},
@@ -458,18 +438,18 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
                 }
                 else {
                     if (verbose) {
-                        cout << "Using default configuration file " << defaultConfigurationPath << " ..." << executableName << endl;
+                        cout << "Using default configuration file " << defaultConfigurationPathString << " ..." << executableName << endl;
                     }
-                    configurationPath = defaultConfigurationPath;
+                    configurationPath = defaultConfigurationPathString;
                 }
             }
         } else {
             // treat all arguments as "remains"
             remains = &argv[1];
             if (verbose) {
-                cout << "Using default configuration file " << defaultConfigurationPath << " ..." << executableName << endl;
+                cout << "Using default configuration file " << defaultConfigurationPathString << " ..." << executableName << endl;
             }
-            configurationPath = defaultConfigurationPath;
+            configurationPath = defaultConfigurationPathString;
         }
 
         // count number of unparsed arguments

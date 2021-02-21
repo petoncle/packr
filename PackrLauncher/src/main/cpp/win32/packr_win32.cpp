@@ -325,6 +325,19 @@ const dropt_char *getExecutablePath(const dropt_char *argv0) {
     return argv0;
 }
 
+/**
+ * Strips ".exe" from the executable name and appends ".json".
+ * @param executableName the UTF-8 encoded executable name
+ * @return UTF-8 encoded configuration path
+ */
+const dropt_char* getDefaultConfigurationPath(const dropt_char* executableName) {
+    wstring executableNameWstring = wstring(executableName);
+    static TCHAR buf[MAX_PATH];
+    wstring appName = executableNameWstring.substr(0, executableNameWstring.size() - L".exe".size());
+    strcpy((appName + L".json").c_str(), buf);
+    return buf;
+}
+
 bool changeWorkingDir(const dropt_char *directory) {
     BOOL currentDirectory = SetCurrentDirectory(directory);
     if(currentDirectory == 0){
