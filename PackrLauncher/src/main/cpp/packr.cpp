@@ -195,13 +195,13 @@ static sajson::document readConfigurationFile(const string &fileName) {
 #ifdef UNICODE
     wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     wstring fileNameWstring = converter.from_bytes(fileName);
-    wifstream in(fileNameWstring, std::ios::in | std::ios::binary);
-    wstring contentWstring = wstring((istreambuf_iterator<wchar_t>(in)), (istreambuf_iterator<wchar_t>()));
-    content = converter.to_bytes(contentWstring);
+    // On Windows, fstream's constructor accepts a wchar_t file name that is unicode.
+    std::fstream file(fileNameWstring.c_str());
+    ifstream in(file, std::ios::in | std::ios::binary);
 #else
     ifstream in(fileName.c_str(), std::ios::in | std::ios::binary);
-    content = string((istreambuf_iterator<char>(in)), (istreambuf_iterator<char>()));
 #endif
+    content = string((istreambuf_iterator<char>(in)), (istreambuf_iterator<char>()));
     cout << "readConfigurationFile content: " << content << endl;
     sajson::document json = sajson::parse(sajson::literal(content.c_str()));
     return json;
