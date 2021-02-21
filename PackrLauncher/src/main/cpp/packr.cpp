@@ -450,6 +450,11 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
         } else {
             // treat all arguments as "remains"
             remains = &argv[1];
+#ifdef UNICODE
+            defaultConfigurationPathString = converter.to_bytes(L"PackrAllTestAppÄ.json");
+#else
+            defaultConfigurationPathString = "PackrAllTestAppÄ.json";
+#endif
             if (verbose) {
                 cout << "Using default configuration file " << defaultConfigurationPathString << " ..." << executableName << endl;
             }
