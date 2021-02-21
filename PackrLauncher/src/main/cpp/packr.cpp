@@ -432,7 +432,11 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
 
                 if (config != nullptr) {
                     if (verbose) {
+#ifdef UNICODE
+                        cout << "Using custom configuration file " << converter.to_bytes(wstring(config)) << " ..." << endl;
+#else
                         cout << "Using custom configuration file " << config << " ..." << endl;
+#endif
                     }
                     configurationPath = string((char *) config);
                 }
