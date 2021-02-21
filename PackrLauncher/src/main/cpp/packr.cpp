@@ -196,10 +196,11 @@ static sajson::document readConfigurationFile(const string &fileName) {
     wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     wstring fileNameWstring = converter.from_bytes(fileName);
     wifstream in(fileNameWstring, std::ios::in | std::ios::binary);
-#else
-    ifstream in(fileName.c_str(), std::ios::in | std::ios::binary);
     contentWstring = wstring((istreambuf_iterator<wchar_t>(in)), (istreambuf_iterator<wchar_t>()));
     content = converter.to_bytes(contentWstring);
+#else
+    ifstream in(fileName.c_str(), std::ios::in | std::ios::binary);
+    content = string((istreambuf_iterator<char>(in)), (istreambuf_iterator<char>()));
 #endif
 
     sajson::document json = sajson::parse(sajson::literal(content.c_str()));
