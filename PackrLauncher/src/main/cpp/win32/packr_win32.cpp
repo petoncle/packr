@@ -333,7 +333,7 @@ const dropt_char *getExecutablePath(const dropt_char *argv0) {
 const dropt_char* getDefaultConfigurationPath(const dropt_char* executableName) {
     wstring executableNameWstring = wstring(executableName);
     static TCHAR buf[MAX_PATH];
-    wstring appName = executableNameWstring.substr(0, executableNameWstring.size() - L".exe".size());
+    wstring appName = executableNameWstring.substr(0, executableNameWstring.size() - wstring(L".exe").size());
     wcscpy(buf, (appName + L".json").c_str());
     return buf;
 }
