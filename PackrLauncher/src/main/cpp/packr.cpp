@@ -324,7 +324,7 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
 #ifdef UNICODE
     wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     defaultConfigurationPath = getDefaultConfigurationPath(converter.from_bytes(executableName).c_str());
-    defaultConfigurationPathString = converter.to_bytes(defaultConfigurationPath).c_str();
+    defaultConfigurationPathString = converter.to_bytes(defaultConfigurationPath);
 #else
     defaultConfigurationPath = getDefaultConfigurationPath(executableName.c_str());
     defaultConfigurationPathString = string(defaultConfigurationPath);
@@ -450,11 +450,6 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
         } else {
             // treat all arguments as "remains"
             remains = &argv[1];
-#ifdef UNICODE
-            defaultConfigurationPathString = converter.to_bytes(L"PackrAllTestAppÄ.json");
-#else
-            defaultConfigurationPathString = "PackrAllTestAppÄ.json";
-#endif
             if (verbose) {
                 cout << "Using default configuration file " << defaultConfigurationPathString << " ..." << executableName << endl;
             }
