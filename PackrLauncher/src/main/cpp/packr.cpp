@@ -196,7 +196,7 @@ static sajson::document readConfigurationFile(const string &fileName) {
     wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     wstring fileNameWstring = converter.from_bytes(fileName);
     // On Windows, fstream's constructor accepts a wchar_t file name that is unicode.
-    std::fstream in(fileNameWstring.c_str());
+    std::fstream in(fileNameWstring.c_str(), std::ios::in | std::ios::binary);
 #else
     ifstream in(fileName.c_str(), std::ios::in | std::ios::binary);
 #endif
