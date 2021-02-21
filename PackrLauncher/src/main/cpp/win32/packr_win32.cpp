@@ -322,11 +322,7 @@ bool loadJNIFunctions(const dropt_char* jrePath, GetDefaultJavaVMInitArgs *getDe
 }
 
 const dropt_char *getExecutablePath(const dropt_char *argv0) {
-    static TCHAR buf[MAX_PATH];
-    GetModuleFileName(NULL, buf, MAX_PATH);
-        wstring_convert<codecvt_utf8_utf16<wchar_t>> converter;
-    cout << "getExecutablePath (Ä): " << converter.to_bytes(wstring(buf)) << endl;
-    return buf;
+    return argv0;
 }
 
 /**
