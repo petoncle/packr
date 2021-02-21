@@ -461,7 +461,7 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
                     configurationPath = string(config);
 #endif
                     if (verbose) {
-                        cout << "Using custom configuration file " << config << " ..." << endl;
+                        cout << "Using custom configuration file " << configurationPath << " ..." << endl;
                     }
                 }
                 else {
