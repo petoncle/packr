@@ -324,7 +324,7 @@ bool loadJNIFunctions(const dropt_char* jrePath, GetDefaultJavaVMInitArgs *getDe
 const dropt_char *getExecutablePath(const dropt_char *argv0) {
     static TCHAR buf[MAX_PATH];
     GetModuleFileName(NULL, buf, MAX_PATH);
-    wcout << L"getExecutablePath (Ä): " << wstring(buf) << endl;
+    cout << "getExecutablePath (Ä): " << string(buf) << endl;
     return buf;
 }
 
@@ -335,7 +335,7 @@ const dropt_char *getExecutablePath(const dropt_char *argv0) {
  */
 const dropt_char* getDefaultConfigurationPath(const dropt_char* executableName) {
     wstring executableNameWstring = wstring(executableName);
-    wcout << L"executableNameWstring (Ä): " << executableNameWstring << endl;
+    cout << "executableName (Ä): " << string(executableName) << endl;
     wstring exeSuffix = wstring(L".exe");
     bool hasExeSuffix = executableNameWstring.size() >= exeSuffix.size() &&
         executableNameWstring.compare(executableNameWstring.size() - exeSuffix.size(),
@@ -347,7 +347,7 @@ const dropt_char* getDefaultConfigurationPath(const dropt_char* executableName) 
         appName = executableNameWstring;
     static TCHAR buf[MAX_PATH];
     wcscpy(buf, (appName + L".json").c_str());
-    wcout << L"default config path: " << wstring(buf) << endl;
+    cout << "default config path (Ä): " << string(buf) << endl;
     return buf;
 }
 
