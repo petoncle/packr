@@ -334,6 +334,7 @@ const dropt_char *getExecutablePath(const dropt_char *argv0) {
  */
 const dropt_char* getDefaultConfigurationPath(const dropt_char* executableName) {
     wstring executableNameWstring = wstring(executableName);
+    wcout << L"executableNameWstring: " << executableNameWstring << endl;
     wstring exeSuffix = wstring(L".exe");
     bool hasExeSuffix = executableNameWstring.size() >= exeSuffix.size() &&
         executableNameWstring.compare(executableNameWstring.size() - exeSuffix.size(),
@@ -345,6 +346,7 @@ const dropt_char* getDefaultConfigurationPath(const dropt_char* executableName) 
         appName = executableNameWstring;
     static TCHAR buf[MAX_PATH];
     wcscpy(buf, (appName + L".json").c_str());
+    wcout << L"default config path: " << wstring(buf) << endl;
     return buf;
 }
 
