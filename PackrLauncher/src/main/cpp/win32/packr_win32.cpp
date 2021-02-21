@@ -324,6 +324,7 @@ bool loadJNIFunctions(const dropt_char* jrePath, GetDefaultJavaVMInitArgs *getDe
 const dropt_char *getExecutablePath(const dropt_char *argv0) {
     static TCHAR buf[MAX_PATH];
     GetModuleFileName(NULL, buf, MAX_PATH);
+    wcout << L"getExecutablePath (Ä): " << wstring(buf) << endl;
     return buf;
 }
 
@@ -334,7 +335,7 @@ const dropt_char *getExecutablePath(const dropt_char *argv0) {
  */
 const dropt_char* getDefaultConfigurationPath(const dropt_char* executableName) {
     wstring executableNameWstring = wstring(executableName);
-    wcout << L"executableNameWstring: " << executableNameWstring << endl;
+    wcout << L"executableNameWstring (Ä): " << executableNameWstring << endl;
     wstring exeSuffix = wstring(L".exe");
     bool hasExeSuffix = executableNameWstring.size() >= exeSuffix.size() &&
         executableNameWstring.compare(executableNameWstring.size() - exeSuffix.size(),
