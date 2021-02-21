@@ -322,7 +322,9 @@ bool loadJNIFunctions(const dropt_char* jrePath, GetDefaultJavaVMInitArgs *getDe
 }
 
 const dropt_char *getExecutablePath(const dropt_char *argv0) {
-    return argv0;
+    static TCHAR buf[MAX_PATH];
+    GetModuleFileName(NULL, buf, MAX_PATH);
+    return buf;
 }
 
 /**
