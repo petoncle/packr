@@ -202,7 +202,7 @@ static sajson::document readConfigurationFile(const string &fileName) {
     ifstream in(fileName.c_str(), std::ios::in | std::ios::binary);
     content = string((istreambuf_iterator<char>(in)), (istreambuf_iterator<char>()));
 #endif
-
+    cout << "readConfigurationFile content: " << content << endl;
     sajson::document json = sajson::parse(sajson::literal(content.c_str()));
     return json;
 }
