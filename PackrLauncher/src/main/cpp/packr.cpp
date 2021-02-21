@@ -192,6 +192,7 @@ static int loadStaticMethod(JNIEnv *env, const vector<string> &classPath, const 
 
 static sajson::document readConfigurationFile(const string &fileName) {
 #ifdef UNICODE
+    wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     ifstream in(converter.to_bytes(wstring(fileName.c_str())).c_str(), std::ios::in | std::ios::binary);
 #else
     ifstream in(fileName.c_str(), std::ios::in | std::ios::binary);
