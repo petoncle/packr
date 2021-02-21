@@ -95,7 +95,7 @@ const dropt_char* getExecutablePath(const dropt_char* argv0) {
 const dropt_char* getDefaultConfigurationPath(const dropt_char* executableName) {
     string executableNameString = string(executableName);
     static char buf[PATH_MAX];
-    strcpy((executableNameString + ".json").c_str(), buf);
+    strcpy(buf, (executableNameString + ".json").c_str());
     return buf;
 }
 
