@@ -354,6 +354,8 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
     defaultConfigurationPathDroptChar = defaultConfigurationPath.c_str();
 #endif
 
+    cout << "executableName " << executableName << endl;
+
     dropt_bool showHelp = 0;
     dropt_bool showVersion = 0;
     dropt_char *cwd = nullptr;
@@ -474,7 +476,6 @@ bool setCmdLineArguments(int argc, dropt_char **argv) {
         } else {
             // treat all arguments as "remains"
             remains = &argv[1];
-            cout << "executableName " << executableName << endl;
             //if (verbose) {
                 cout << "Using default configuration file " << defaultConfigurationPath << " ..." << executableName << endl;
             //}
